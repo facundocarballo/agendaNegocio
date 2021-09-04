@@ -1,6 +1,6 @@
 import 'package:agenda_prueba/Clases/clientes.dart';
+import 'package:agenda_prueba/Clases/negocio.dart';
 import 'package:agenda_prueba/funciones.dart';
-import 'package:agenda_prueba/.ConstantesGlobales/constantesGlobales.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -105,7 +105,7 @@ class ClientesController extends ChangeNotifier {
   int compareString(bool ascending, String value1, String value2) =>
       ascending ? value1.compareTo(value2) : value2.compareTo(value1);
 
-  Future<List<Cliente>> getClientes() async {
+  Future<List<Cliente>> getClientes({@required Negocio negocio}) async {
     print('get clientes');
     if (!auxCrearCliente) {
       if (auxBusqueda) {
@@ -114,7 +114,7 @@ class ClientesController extends ChangeNotifier {
       } else {
         if (auxGetClientes) {
           print('leemos');
-          clientes = await obtenerClientes();
+          clientes = await obtenerClientes(negocio: negocio);
           // El clientesAux sirve para permanecer el valor de los clientes ante una busqueda y que
           // luego esa busqueda sea cancelada.
           clientesAux = clientes;
@@ -139,8 +139,10 @@ class ClientesController extends ChangeNotifier {
 
   // Crear clientes...
 
-  crearClienteFirestore({@required Cliente cliente}) async {
-    final constantes = ConstantesGlobales();
+  crearClienteFirestore({
+    @required Cliente cliente,
+    @required Negocio negocio,
+  }) async {
     cliente.nombreApellido = '${cliente.apellido}, ${cliente.nombre}';
     cliente.visitas = 0;
     cliente.gastado = 0;
@@ -148,7 +150,7 @@ class ClientesController extends ChangeNotifier {
     clientes.add(cliente);
     final docReference = FirebaseFirestore.instance
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Clientes')
         .doc();
     cliente.id = docReference.id;

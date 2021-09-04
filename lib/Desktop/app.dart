@@ -1,5 +1,6 @@
 import 'package:agenda_prueba/Paginas/Clientes/clientes.dart';
 import 'package:agenda_prueba/Paginas/Configuracion/horarios.dart';
+import 'package:agenda_prueba/Paginas/Configuracion/productos.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/Paginas/Disponibles-Ocupados/disponiblesOcupados.dart';
 import 'package:agenda_prueba/Paginas/PanelControl/panelControl.dart';
@@ -40,7 +41,9 @@ class _AppState extends State<App> {
                 ? PanelControl()
                 : paginaProvider.clientes
                     ? Clientes()
-                    : Configuracion(),
+                    : paginaProvider.configuracion
+                        ? Configuracion()
+                        : AdministrarProductos(),
       ),
     );
   }

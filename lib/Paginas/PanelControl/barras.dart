@@ -1,3 +1,4 @@
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/Componentes/barChart.dart';
 import 'package:agenda_prueba/Provider/panelControl.dart';
@@ -12,8 +13,10 @@ class _BarrasState extends State<Barras> {
   @override
   Widget build(BuildContext context) {
     final panelProvider = Provider.of<PanelProvider>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
     return FutureBuilder(
-      future: panelProvider.obtenerTurnosDelMes(),
+      future:
+          panelProvider.obtenerTurnosDelMes(negocio: negocioProvider.negocio),
       builder: (context, snapshoot) {
         if (snapshoot.connectionState == ConnectionState.waiting) {
           return Center(

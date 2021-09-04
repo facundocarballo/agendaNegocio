@@ -1,5 +1,7 @@
 import 'package:agenda_prueba/Clases/clientes.dart';
+import 'package:agenda_prueba/Clases/negocio.dart';
 import 'package:agenda_prueba/Paginas/Clientes/controller.dart';
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:agenda_prueba/estilos.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,7 @@ class _AgregarClienteState extends State<AgregarCliente> {
     final colores = Colores();
     final botones = EstilosBotones();
     final clientesController = Provider.of<ClientesController>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
     final TextEditingController nombreController = TextEditingController();
     final TextEditingController apellidoController = TextEditingController();
     final TextEditingController aliasController = TextEditingController();
@@ -24,7 +27,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
     final TextEditingController telefonoController = TextEditingController();
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-    onFieldSubmitted({@required BuildContext context}) async {
+    onFieldSubmitted({
+      @required BuildContext context,
+      @required Negocio negocio,
+    }) async {
       if (_formKey.currentState.validate()) {
         final cliente = Cliente(
           apellido: apellidoController.text,
@@ -34,7 +40,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
           telefono: telefonoController.text,
           alias: aliasController.text,
         );
-        await clientesController.crearClienteFirestore(cliente: cliente);
+        await clientesController.crearClienteFirestore(
+          cliente: cliente,
+          negocio: negocio,
+        );
         //await cliente.crearClienteFirestore();
         print('Cliente agregado...');
         Navigator.pop(context);
@@ -67,8 +76,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                             ? 'El nombre del cliente es requerido'
                             : null;
                       },
-                      onFieldSubmitted: (value) =>
-                          onFieldSubmitted(context: context),
+                      onFieldSubmitted: (value) => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                     ),
                   ),
                 ],
@@ -88,8 +99,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                             ? 'El apellido del cliente es requerido'
                             : null;
                       },
-                      onFieldSubmitted: (value) =>
-                          onFieldSubmitted(context: context),
+                      onFieldSubmitted: (value) => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                     ),
                   ),
                   SizedBox(width: 20),
@@ -105,8 +118,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                     child: TextFormField(
                       controller: aliasController,
                       decoration: InputDecoration(hintText: 'Alias'),
-                      onFieldSubmitted: (value) =>
-                          onFieldSubmitted(context: context),
+                      onFieldSubmitted: (value) => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                     ),
                   ),
                   SizedBox(width: 20),
@@ -122,8 +137,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                     child: TextFormField(
                       controller: emailController,
                       decoration: InputDecoration(hintText: 'Email'),
-                      onFieldSubmitted: (value) =>
-                          onFieldSubmitted(context: context),
+                      onFieldSubmitted: (value) => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                     ),
                   ),
                   SizedBox(width: 20),
@@ -139,8 +156,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                     child: TextFormField(
                       controller: telefonoController,
                       decoration: InputDecoration(hintText: 'Telefono'),
-                      onFieldSubmitted: (value) =>
-                          onFieldSubmitted(context: context),
+                      onFieldSubmitted: (value) => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                     ),
                   ),
                   SizedBox(width: 20),
@@ -155,7 +174,10 @@ class _AgregarClienteState extends State<AgregarCliente> {
                     height: 40,
                     child: ElevatedButton(
                       child: Text('Agregar Cliente'),
-                      onPressed: () => onFieldSubmitted(context: context),
+                      onPressed: () => onFieldSubmitted(
+                        context: context,
+                        negocio: negocioProvider.negocio,
+                      ),
                       style: botones.azul,
                     ),
                   ),

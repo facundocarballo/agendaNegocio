@@ -1,4 +1,5 @@
 import 'package:agenda_prueba/Paginas/Clientes/controller.dart';
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:agenda_prueba/Provider/turnosController.dart';
 import 'package:agenda_prueba/Paginas/Clientes/agregarCliente.dart';
 import 'package:agenda_prueba/estilos.dart';
@@ -19,6 +20,7 @@ class _AgregarTurnoClienteState extends State<AgregarTurnoCliente> {
   Widget build(BuildContext context) {
     final clientesController = Provider.of<ClientesController>(context);
     TurnosController turnoProvider = Provider.of<TurnosController>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
     final theWidth = MediaQuery.of(context).size.width - 50;
     final theHeight = MediaQuery.of(context).size.height / 4;
     final colores = Colores();
@@ -100,7 +102,9 @@ class _AgregarTurnoClienteState extends State<AgregarTurnoCliente> {
           width: (theWidth / 2) - 100,
           height: theHeight,
           child: FutureBuilder(
-            future: clientesController.getClientes(),
+            future: clientesController.getClientes(
+              negocio: negocioProvider.negocio,
+            ),
             builder: (context, snapshoot) {
               if (snapshoot.hasError) {
                 return Center(

@@ -1,5 +1,6 @@
 import 'package:agenda_prueba/Componentes/celdas.dart';
 import 'package:agenda_prueba/Paginas/Clientes/controller.dart';
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _TablaState extends State<Tabla> {
   @override
   Widget build(BuildContext context) {
     final clientesController = Provider.of<ClientesController>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
 
     // Funciones...
     List<DataRow> obtenerRows() {
@@ -83,7 +85,7 @@ class _TablaState extends State<Tabla> {
     }
 
     return FutureBuilder(
-      future: clientesController.getClientes(),
+      future: clientesController.getClientes(negocio: negocioProvider.negocio),
       builder: (context, snapshoot) {
         return Expanded(
           child: DataTable(

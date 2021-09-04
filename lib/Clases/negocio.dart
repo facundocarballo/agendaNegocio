@@ -78,7 +78,6 @@ class Negocio {
       int duracion = 15;
       final diaString = obtenerDiaString(index: i);
       final dia = data[diaString] as dynamic ?? {};
-
       if (!dia.isEmpty) {
         inicioManana = dia['inicioManana'] as String ?? '';
         finManana = dia['finManana'] as String ?? '';
@@ -130,219 +129,235 @@ class Negocio {
     }
     switch (index) {
       case 0:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.domingo.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.domingo.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.domingo.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.domingo.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.domingo.horariosAperturaCierre.disponible = disponible;
-          this.domingo.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.domingo.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.domingo.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.domingo.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.domingo.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.domingo.horariosAperturaCierre.disponible = disponible;
-          this.domingo.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.domingo.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 1:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.lunes.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.lunes.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.lunes.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.lunes.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.lunes.horariosAperturaCierre.disponible = disponible;
-          this.lunes.horariosAperturaCierre.trabajoDeCorrido = trabajoDeCorrido;
-        } else {
-          this.lunes.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.lunes.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.lunes.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.lunes.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.lunes.horariosAperturaCierre.disponible = disponible;
-          this.lunes.horariosAperturaCierre.trabajoDeCorrido = trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.lunes.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 2:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.martes.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.martes.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.martes.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.martes.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.martes.horariosAperturaCierre.disponible = disponible;
-          this.martes.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.martes.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.martes.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.martes.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.martes.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.martes.horariosAperturaCierre.disponible = disponible;
-          this.martes.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.martes.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 3:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.miercoles.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.miercoles.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.miercoles.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.miercoles.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.miercoles.horariosAperturaCierre.disponible = disponible;
-          this.miercoles.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.miercoles.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.miercoles.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.miercoles.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.miercoles.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.miercoles.horariosAperturaCierre.disponible = disponible;
-          this.miercoles.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.miercoles.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 4:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.jueves.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.jueves.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.jueves.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.jueves.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.jueves.horariosAperturaCierre.disponible = disponible;
-          this.jueves.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.jueves.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.jueves.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.jueves.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.jueves.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.jueves.horariosAperturaCierre.disponible = disponible;
-          this.jueves.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.jueves.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 5:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.viernes.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.viernes.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.viernes.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.viernes.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.viernes.horariosAperturaCierre.disponible = disponible;
-          this.viernes.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.viernes.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.viernes.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.viernes.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.viernes.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.viernes.horariosAperturaCierre.disponible = disponible;
-          this.viernes.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.viernes.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       case 6:
+        TimeOfDay aperturaM = TimeOfDay.now();
+        TimeOfDay aperturaT = TimeOfDay.now();
+        TimeOfDay cerrarM = TimeOfDay.now();
+        TimeOfDay cerrarT = TimeOfDay.now();
         if (disponible) {
-          this.sabado.horariosAperturaCierre.abreM = TimeOfDay(
+          aperturaM = TimeOfDay(
             hour: int.parse(abreM.split(':')[0]),
             minute: int.parse(abreM.split(':')[1]),
           );
-          this.sabado.horariosAperturaCierre.abreT = TimeOfDay(
+          aperturaT = TimeOfDay(
             hour: int.parse(abreT.split(':')[0]),
             minute: int.parse(abreT.split(':')[1]),
           );
-          this.sabado.horariosAperturaCierre.cierraT = TimeOfDay(
-            hour: int.parse(cierraT.split(':')[0]),
-            minute: int.parse(cierraT.split(':')[1]),
-          );
-          this.sabado.horariosAperturaCierre.cierraM = TimeOfDay(
+          cerrarM = TimeOfDay(
             hour: int.parse(cierraM.split(':')[0]),
             minute: int.parse(cierraM.split(':')[1]),
           );
-          this.sabado.horariosAperturaCierre.disponible = disponible;
-          this.sabado.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
-        } else {
-          this.sabado.horariosAperturaCierre.abreM = TimeOfDay.now();
-          this.sabado.horariosAperturaCierre.abreT = TimeOfDay.now();
-          this.sabado.horariosAperturaCierre.cierraM = TimeOfDay.now();
-          this.sabado.horariosAperturaCierre.cierraT = TimeOfDay.now();
-          this.sabado.horariosAperturaCierre.disponible = disponible;
-          this.sabado.horariosAperturaCierre.trabajoDeCorrido =
-              trabajoDeCorrido;
+          cerrarT = TimeOfDay(
+            hour: int.parse(cierraT.split(':')[0]),
+            minute: int.parse(cierraT.split(':')[1]),
+          );
         }
+        this.sabado.horariosAperturaCierre = DisponibilidadHoraria(
+          abreM: aperturaM,
+          cierraM: cerrarM,
+          abreT: aperturaT,
+          cierraT: cerrarT,
+          duracion: duracion,
+          disponible: disponible,
+          trabajoDeCorrido: trabajoDeCorrido,
+        );
         break;
       default:
         print("Error en armarHorariosAperturaCierre");

@@ -1,4 +1,6 @@
 import 'package:agenda_prueba/Clases/negocio.dart';
+import 'package:agenda_prueba/Componentes/Header/header.dart';
+import 'package:agenda_prueba/Componentes/Header/mobileHeader.dart';
 import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/funciones.dart';
@@ -26,6 +28,7 @@ class _AdministrarProductosState extends State<AdministrarProductos> {
       key: _keyForm,
       child: Column(
         children: [
+          (width + 40) > 600 ? Header() : MobileHeader(),
           SizedBox(height: 20),
           Row(
             children: [

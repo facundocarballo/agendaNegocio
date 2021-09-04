@@ -1,4 +1,6 @@
 import 'package:agenda_prueba/Paginas/Clientes/clientes.dart';
+import 'package:agenda_prueba/Paginas/Configuracion/horarios.dart';
+import 'package:agenda_prueba/Paginas/Configuracion/productos.dart';
 import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/Componentes/cantidadTurnos.dart';
@@ -80,7 +82,11 @@ class _MobileAppState extends State<MobileApp> {
               )
             : paginaProvider.panelControl
                 ? PanelControl()
-                : Clientes(),
+                : paginaProvider.clientes
+                    ? Clientes()
+                    : paginaProvider.configuracion
+                        ? Configuracion()
+                        : AdministrarProductos(),
       ),
     );
   }

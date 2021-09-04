@@ -1,3 +1,4 @@
+import 'package:agenda_prueba/Clases/negocio.dart';
 import 'package:agenda_prueba/Clases/turno.dart';
 import 'package:agenda_prueba/funciones.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -34,8 +35,11 @@ class Cliente {
   final collectionClientes = FirebaseFirestore.instance.collection('Clientes');
   final constantes = ConstantesGlobales();
 
-  actualizarValoresDelCliente(
-      {@required Turno turno, @required bool agregado}) async {
+  actualizarValoresDelCliente({
+    @required Turno turno,
+    @required bool agregado,
+    @required Negocio negocio,
+  }) async {
     if (agregado) {
       // ESTE ANDA BIEN.
       final data = obtenerGastadoPromedio(turno: turno, agregado: agregado);
@@ -51,17 +55,24 @@ class Cliente {
         gastado: gastado,
         promedio: promedio,
         visitas: visitas,
+        negocio: negocio,
       );
     } else {
       // PROBAR ESTE
-      final elCliente = await obtenerCliente(clienteID: turno.cliente.id);
+      final elCliente = await obtenerCliente(
+        clienteID: turno.cliente.id,
+        negocio: negocio,
+      );
       final data = obtenerGastadoPromedio(turno: turno, agregado: agregado);
       final gastado = data['gastado'];
       // gastado esta en negativo, por eso se suma.
       elCliente.gastado = elCliente.gastado + gastado;
       elCliente.visitas = elCliente.visitas - 1;
       elCliente.promedio = (elCliente.gastado / elCliente.visitas);
-      await actualizarValoresDelClienteFuncionesRemove(cliente: elCliente);
+      await actualizarValoresDelClienteFuncionesRemove(
+        cliente: elCliente,
+        negocio: negocio,
+      );
     }
   }
 }

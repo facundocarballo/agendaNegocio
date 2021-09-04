@@ -1,3 +1,4 @@
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/Componentes/Header/header.dart';
 import 'package:agenda_prueba/Componentes/Header/mobileHeader.dart';
@@ -15,6 +16,7 @@ class _PanelControlState extends State<PanelControl> {
   @override
   Widget build(BuildContext context) {
     final panelProvider = Provider.of<PanelProvider>(context);
+    NegocioProvider negocioProvier = Provider.of<NegocioProvider>(context);
     final width = MediaQuery.of(context).size.width;
     final estilosTextos = EstilosTexto();
     final colores = Colores();
@@ -42,8 +44,10 @@ class _PanelControlState extends State<PanelControl> {
                       value: items,
                     );
                   }).toList(),
-                  onChanged: (dynamic mes) =>
-                      panelProvider.cambiarMes(mes: mes),
+                  onChanged: (dynamic mes) => panelProvider.cambiarMes(
+                    mes: mes,
+                    negocio: negocioProvier.negocio,
+                  ),
                 ),
                 SizedBox(width: 40),
               ],

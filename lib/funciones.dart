@@ -1,6 +1,5 @@
 import 'package:agenda_prueba/Clases/clientes.dart';
 import 'package:agenda_prueba/Clases/negocio.dart';
-import 'package:agenda_prueba/.ConstantesGlobales/constantesGlobales.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'Clases/turno.dart';
@@ -172,12 +171,11 @@ Future<Map<String, dynamic>> obtenerOcupadosDisponibles({
     'disponibles': [],
     'ocupados': [],
   };
-  final constantes = ConstantesGlobales();
   List<Turno> losTurnosOcupados = [];
   try {
     await FirebaseFirestore.instance
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Dias')
         .doc(fechaFS)
         .get()
@@ -259,13 +257,13 @@ double horarioToInt({@required String horario}) {
   return (entero + (decimal / 100));
 }
 
-Future<Cliente> obtenerCliente({@required String clienteID}) async {
+Future<Cliente> obtenerCliente(
+    {@required String clienteID, @required Negocio negocio}) async {
   Cliente cliente = Cliente();
-  final constantes = ConstantesGlobales();
   try {
     await _db
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Clientes')
         .doc(clienteID)
         .get()
@@ -303,14 +301,13 @@ Future<Cliente> obtenerCliente({@required String clienteID}) async {
   }
 }
 
-Future<List<Cliente>> obtenerClientes() async {
+Future<List<Cliente>> obtenerClientes({@required Negocio negocio}) async {
   print('Se usa?');
-  final constantes = ConstantesGlobales();
   List<Cliente> clientes = [];
   try {
     await _db
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Clientes')
         .get()
         .then((snapshoot) {
@@ -351,16 +348,16 @@ Future<List<Cliente>> obtenerClientes() async {
 }
 
 actualizarValoresDelClienteFunciones({
+  @required Negocio negocio,
   @required Turno turno,
   @required double gastado,
   @required double promedio,
   @required double visitas,
 }) {
   final cliente = turno.cliente;
-  final constantes = ConstantesGlobales();
   FirebaseFirestore.instance
       .collection('Negocio')
-      .doc(constantes.documentoPRUEBA)
+      .doc(negocio.id)
       .collection('Clientes')
       .doc(cliente.id)
       .update({
@@ -375,12 +372,14 @@ actualizarValoresDelClienteFunciones({
   });
 }
 
-actualizarValoresDelClienteFuncionesRemove({@required Cliente cliente}) async {
-  final constantes = ConstantesGlobales();
+actualizarValoresDelClienteFuncionesRemove({
+  @required Cliente cliente,
+  @required Negocio negocio,
+}) async {
   try {
     await FirebaseFirestore.instance
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Clientes')
         .doc(cliente.id)
         .update({
@@ -431,115 +430,14 @@ Map<String, double> obtenerGastadoPromedio(
   };
 }
 
-/*
-
-Future<List<String>> obtenerDisponibles(
-    {@required String dia, DateTime dateTime, Negocio negocio}) async {
-  /*
-  Increiblemente hay un error con el final dataDefault que lo toma como una variable y permite que se realicen cambios en esa constante
-  Por otro lado, cuando asignaba turnosDisponibles = dataDefault; a turnosDisponibles le daba el valor de dataDefault, pero si modificaba
-  turnosDisponibles, modificaba tambien dataDefautl. Era como si le estuviera pasando la direccion de memoria, es decir una hacia referencia a la otra.
-  */
-  /*
-  Necesitamos que un Provider se encargue cada vez que cambia de fecha que
-  ponga en una variable la disponibilidadHoraria de ese dia
-  */
-
-  // final fechaFS = fechaFirebase(date: dateTime);
-  // var losTurnosDisponibles = obtenerDisponiblidadHoraria(
-  //   negocio: negocio,
-  //   dateTime: dateTime,
-  // );
-  // try {
-  //   await _db.collection('Dias').doc(fechaFS).get().then((doc) {
-  //     final data = doc.data();
-  //     final turnos = data['turnos'] as List<dynamic> ?? [];
-  //     if (turnos.isNotEmpty) {
-  //       for (var turno in turnos) {
-  //         final alias = turno['alias'] as String ?? '';
-  //         final clienteID = turno['clienteID'] as String ?? '';
-  //         final fotoURL = turno['fotoURL'] as String ?? '';
-  //         final horario = turno['horario'] as String ?? '';
-  //         final nombreApellido = turno['nombreApellido'] as String ?? '';
-  //       }
-  //     }
-  //   });
-  // } catch (e) {
-  //   print('Error, obtenerDisponibles: ${e.toString()}');
-  //   return losTurnosDisponibles;
-  // }
-
-  var turnosDisponibles = [
-    '9:30',
-    '9:45',
-    '10:00',
-    '10:15',
-    '10:30',
-    '10:45',
-    '11:00',
-    '11:15',
-    '11:30',
-    '11:45',
-    '12:00',
-    '12:15',
-    '12:30',
-    '12:45',
-    '13:00',
-    '13:15',
-    '13:30',
-    '13:45',
-    '14:00',
-    '14:15',
-    '14:30',
-    '14:45',
-    '15:00',
-    '15:15',
-    '15:30',
-    '15:45',
-    '16:00',
-    '16:15',
-    '16:30',
-    '16:45',
-    '17:00',
-    '17:15',
-    '17:30',
-    '17:45',
-    '18:00',
-    '18:15',
-    '18:30',
-    '18:45',
-    '19:00',
-    '19:15',
-    '19:30',
-    '19:45',
-    '20:00'
-  ];
-  try {
-    await _db.collection('Dias').doc(dia).get().then((doc) {
-      final data = doc.data();
-      final turnos = data['turnos'] as List<dynamic> ?? [];
-      if (turnos.isNotEmpty) {
-        for (var turno in turnos) {
-          final horario = turno['horario'] as String;
-          if (turnosDisponibles.contains(horario)) {
-            turnosDisponibles.remove(horario);
-          }
-        }
-      }
-    });
-  } catch (e) {
-    return dataDefault;
-  }
-  return turnosDisponibles;
-}
-*/
-
-agregarTurnoFirebase(
-    {@required Turno turno, @required String fechaFirebase}) async {
-  final constantes = ConstantesGlobales();
+agregarTurnoFirebase({
+  @required Turno turno,
+  @required String fechaFirebase,
+  @required Negocio negocio,
+}) async {
   final docuemnto = _db
       .collection('Negocio')
-      .doc(constantes.documentoPRUEBA)
+      .doc(negocio.id)
       .collection('Dias')
       .doc(fechaFirebase);
   await docuemnto.get().then((docSnap) {

@@ -1,6 +1,7 @@
 import 'package:agenda_prueba/Paginas/AgregarTurno/clientes.dart';
 import 'package:agenda_prueba/Paginas/AgregarTurno/productos.dart';
 import 'package:agenda_prueba/Paginas/Clientes/controller.dart';
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:agenda_prueba/Provider/turnosController.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/estilos.dart';
@@ -21,6 +22,7 @@ class _AgregarState extends State<Agregar> {
   Widget build(BuildContext context) {
     FechaProvider fechaProvider = Provider.of<FechaProvider>(context);
     TurnosController turnosProvider = Provider.of<TurnosController>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
     ClientesController clientesController =
         Provider.of<ClientesController>(context);
     GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -61,6 +63,7 @@ class _AgregarState extends State<Agregar> {
                               await fechaProvider.agregarTurnoFirebaseProvider(
                                 turno: turnosProvider.turno,
                                 fechaFirebase: fechaFS,
+                                negocio: negocioProvider.negocio,
                               );
                               clientesController.cancelarBusqueda();
                               turnosProvider.limpiarTurno();

@@ -169,6 +169,10 @@ class NegocioProvider extends ChangeNotifier {
     if (user == null) {
       user = await _auth.authStateChanges().first;
     }
+    _negocio.email = user.email;
+    _negocio.nombreDueno = user.displayName;
+    _negocio.telefono = user.phoneNumber;
+    _negocio.fotoURL = user.photoURL;
     await _negocio.obtenerElNegocio(email: user.email);
     return _negocio;
   }

@@ -1,3 +1,4 @@
+import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/estilos.dart';
 import 'package:agenda_prueba/Provider/fecha.dart';
@@ -17,6 +18,7 @@ class _CancelarState extends State<Cancelar> {
   @override
   Widget build(BuildContext context) {
     FechaProvider fechaProvider = Provider.of<FechaProvider>(context);
+    NegocioProvider negocioProvider = Provider.of<NegocioProvider>(context);
     final fechaString = obtenerFecha(date: fechaProvider.dateTime);
     final fechaFire = fechaFirebase(date: fechaProvider.dateTime);
     final estilosTextos = EstilosTexto();
@@ -71,6 +73,7 @@ class _CancelarState extends State<Cancelar> {
                       await fechaProvider.cancelarTurnoFirebaseProvider(
                         turno: widget.turno,
                         fechaFirebase: fechaFire,
+                        negocio: negocioProvider.negocio,
                       );
                       Navigator.of(context).pop();
                     },

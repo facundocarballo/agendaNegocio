@@ -1,5 +1,5 @@
+import 'package:agenda_prueba/Clases/negocio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:agenda_prueba/.ConstantesGlobales/constantesGlobales.dart';
 import 'package:flutter/material.dart';
 
 class PanelProvider extends ChangeNotifier {
@@ -30,68 +30,69 @@ class PanelProvider extends ChangeNotifier {
   List<String> get meses => _meses;
   List<Map<String, dynamic>> get turnosXdia => _turnosXdia;
 
-  cambiarMes({@required String mes}) {
+  cambiarMes({@required String mes, @required Negocio negocio}) {
     switch (mes) {
       case 'Enero':
         _month = 0;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Febrero':
         _month = 1;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Marzo':
         _month = 2;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Abril':
         _month = 3;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Mayo':
         _month = 4;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Junio':
         _month = 5;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Julio':
         _month = 6;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Agosto':
         _month = 7;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Septiembre':
         _month = 8;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Octubre':
         _month = 9;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Noviembre':
         _month = 10;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
       case 'Diciembre':
         _month = 11;
-        obtenerTurnosDelMes();
+        obtenerTurnosDelMes(negocio: negocio);
         break;
     }
   }
 
-  Future<List<Map<String, dynamic>>> obtenerTurnosDelMes() async {
-    final constantes = ConstantesGlobales();
+  Future<List<Map<String, dynamic>>> obtenerTurnosDelMes({
+    @required Negocio negocio,
+  }) async {
     if (auxGetMes) {
       _turnosXmes = 0;
       _turnosXdia = [];
       try {
         await _db
             .collection('Negocio')
-            .doc(constantes.documentoPRUEBA)
+            .doc(negocio.id)
             .collection('Dias')
             .get()
             .then((snapshoot) {

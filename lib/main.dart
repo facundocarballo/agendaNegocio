@@ -7,7 +7,6 @@ import 'package:agenda_prueba/Provider/configuracionController.dart';
 import 'package:agenda_prueba/Provider/negocio.dart';
 import 'package:agenda_prueba/Provider/turnosController.dart';
 import 'package:flutter/material.dart';
-import 'package:agenda_prueba/.ConstantesGlobales/constantesGlobales.dart';
 import 'package:provider/provider.dart';
 import 'Provider/fecha.dart';
 import 'Provider/authController.dart';
@@ -35,9 +34,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final constantesGlobales = ConstantesGlobales();
     return MaterialApp(
-      title: constantesGlobales.nombreApp,
+      title: 'Agenda Negocio',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -71,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Login(),
           );
         }
-        if (snapshoot.data.email == null) {
+        if (snapshoot.data.nombre == null) {
           return Presentacion();
         }
         if (MediaQuery.of(context).size.width > 600) {

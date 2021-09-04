@@ -1,6 +1,5 @@
 import 'package:agenda_prueba/Clases/negocio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:agenda_prueba/.ConstantesGlobales/constantesGlobales.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_prueba/funciones.dart';
 import 'package:agenda_prueba/Clases/turno.dart';
@@ -98,12 +97,14 @@ class FechaProvider extends ChangeNotifier {
     }
   }
 
-  agregarTurnoFirebaseProvider(
-      {@required Turno turno, @required String fechaFirebase}) async {
-    final constantes = ConstantesGlobales();
+  agregarTurnoFirebaseProvider({
+    @required Turno turno,
+    @required String fechaFirebase,
+    @required Negocio negocio,
+  }) async {
     final docuemnto = FirebaseFirestore.instance
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Dias')
         .doc(fechaFirebase);
     await docuemnto.get().then((docSnap) async {
@@ -126,6 +127,7 @@ class FechaProvider extends ChangeNotifier {
       await turno.cliente.actualizarValoresDelCliente(
         turno: turno,
         agregado: true,
+        negocio: negocio,
       );
       notifyListeners();
     });
@@ -134,8 +136,8 @@ class FechaProvider extends ChangeNotifier {
   cancelarTurnoFirebaseProvider({
     @required Turno turno,
     @required String fechaFirebase,
+    @required Negocio negocio,
   }) async {
-    final constantes = ConstantesGlobales();
     var index = 0;
     List<Turno> ocupados = _ocupados;
     while (ocupados[index].cliente != turno.cliente &&
@@ -146,7 +148,7 @@ class FechaProvider extends ChangeNotifier {
     ordenarOcupados(ocupados: _ocupados);
     FirebaseFirestore.instance
         .collection('Negocio')
-        .doc(constantes.documentoPRUEBA)
+        .doc(negocio.id)
         .collection('Dias')
         .doc(fechaFirebase)
         .update({'turnos': arrayToMap(array: ocupados)});
@@ -160,6 +162,7 @@ class FechaProvider extends ChangeNotifier {
     await turno.cliente.actualizarValoresDelCliente(
       turno: turno,
       agregado: false,
+      negocio: negocio,
     );
 
     notifyListeners();
